@@ -4,12 +4,12 @@
 /* Custom CSS Variables for Design Tokens */
 @theme {
   /* Colors */
-  --color-brand-primary: #FF6B6B;
+  --color-brand-primary: #fcb434;
   --color-brand-secondary: #4ECDC4;
-  --color-brand-accent: #FFE66D;
+  --color-brand-accent: #FF6B6B;
 
   /* Dark theme colors */
-  --color-dark-bg: #000000;
+  --color-dark-bg: #030303;
   --color-dark-surface: #1a1a1a;
 
   /* Typography Scale */
@@ -45,6 +45,7 @@
   body {
     @apply bg-black text-white;
     font-family: var(--font-family-body);
+    overflow-x: hidden;
   }
 
   ::selection {
