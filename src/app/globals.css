@@ -1,26 +1,153 @@
+/* app/globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Custom CSS Variables for Design Tokens */
+@theme {
+  /* Colors */
+  --color-brand-primary: #FF6B6B;
+  --color-brand-secondary: #4ECDC4;
+  --color-brand-accent: #FFE66D;
+
+  /* Dark theme colors */
+  --color-dark-bg: #000000;
+  --color-dark-surface: #1a1a1a;
+
+  /* Typography Scale */
+  --font-family-display: 'Inter', system-ui, sans-serif;
+  --font-family-body: 'Inter', system-ui, sans-serif;
+
+  /* Custom font sizes */
+  --font-size-hero: clamp(3rem, 10vw, 8rem);
+  --font-size-section: clamp(2rem, 6vw, 4rem);
+  --font-size-display: clamp(1.5rem, 4vw, 2.5rem);
+
+  /* Spacing */
+  --spacing-section: clamp(4rem, 10vw, 8rem);
+
+  /* Animation timing */
+  --duration-smooth: 0.6s;
+  --duration-medium: 0.4s;
+  --duration-fast: 0.2s;
+
+  /* Easing functions */
+  --ease-smooth: cubic-bezier(0.6, -0.05, 0.01, 0.99);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Base styles */
+@layer base {
+  html {
+    @apply antialiased;
+    scroll-behavior: auto;
+    /* Handled by Lenis */
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-black text-white;
+    font-family: var(--font-family-body);
+  }
+
+  ::selection {
+    @apply bg-brand-primary text-white;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom utilities */
+@layer utilities {
+  .text-hero {
+    font-size: var(--font-size-hero);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    font-weight: 900;
+  }
+
+  .text-section {
+    font-size: var(--font-size-section);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-weight: 800;
+  }
+
+  .text-display {
+    font-size: var(--font-size-display);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, .005) 35px, rgba(255, 255, 255, .005) 70px),
+      repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255, 255, 255, .005) 35px, rgba(255, 255, 255, .005) 70px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+/* Custom animations */
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-secondary);
 }
