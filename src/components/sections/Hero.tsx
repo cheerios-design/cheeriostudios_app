@@ -1,14 +1,19 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { fadeInUp, textReveal } from '@/utils/animations';
-import ScrollAnimation from '@/components/animations/ScrollAnimation';
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/utils/animations";
+import ScrollAnimation from "@/components/animations/ScrollAnimation";
+import ThreeWave from "@/components/animations/ThreeWave";
 
 export default function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Animated Wave Background */}
+      <ThreeWave />
+
+      {/* Original gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/10 to-transparent" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial="hidden"
@@ -20,14 +25,14 @@ export default function Hero() {
             Where Digital
             <span className="block text-brand-primary">Dreams Take Flight</span>
           </h1>
-          
+
           <ScrollAnimation>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto mb-12">
-              We transform ambitious ideas into extraordinary online experiences 
+              We transform ambitious ideas into extraordinary online experiences
               that captivate audiences and drive results.
             </p>
           </ScrollAnimation>
-          
+
           <ScrollAnimation delay={0.2}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button

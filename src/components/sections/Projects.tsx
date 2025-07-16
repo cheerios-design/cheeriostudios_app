@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import ScrollAnimation from '@/components/animations/ScrollAnimation';
-import ParallaxSection from '@/components/animations/ParallaxSection';
+import ScrollAnimation from "@/components/animations/ScrollAnimation";
+import ParallaxSection from "@/components/animations/ParallaxSection";
 
 export default function Projects() {
   const projects = [
@@ -9,20 +9,20 @@ export default function Projects() {
       title: "Archovia Platform",
       category: "Web Application",
       description: "Revolutionary architecture collaboration platform",
-      image: "/api/placeholder/600/400"
+      image: "/projects/archovia/proj.thmbnl-archovia.webp",
     },
     {
       title: "Envanter System",
       category: "Enterprise Solution",
       description: "Comprehensive inventory management system",
-      image: "/api/placeholder/600/400"
+      image: "/projects/envanter/proj.thmbnl-envanter.webp",
     },
     {
       title: "Digital Agency Website",
       category: "Corporate Website",
       description: "Modern website with cutting-edge animations",
-      image: "/api/placeholder/600/400"
-    }
+      image: "/projects/archovia/proj.thmbnl-archovia.png",
+    },
   ];
 
   return (
@@ -31,15 +31,21 @@ export default function Projects() {
         <ScrollAnimation>
           <h2 className="text-section text-center mb-16">Featured Projects</h2>
         </ScrollAnimation>
-        
+
         <div className="space-y-32">
           {projects.map((project, index) => (
             <ParallaxSection key={project.title} offset={30}>
-              <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 items-center`}>
+              <div
+                className={`flex flex-col ${
+                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                } gap-12 items-center`}
+              >
                 <div className="flex-1">
                   <ScrollAnimation>
                     <h3 className="text-display mb-4">{project.title}</h3>
-                    <p className="text-brand-primary mb-2">{project.category}</p>
+                    <p className="text-brand-primary mb-2">
+                      {project.category}
+                    </p>
                     <p className="text-white/70 mb-6">{project.description}</p>
                     <button className="text-white underline underline-offset-4 hover:text-brand-primary transition-colors">
                       View Case Study →
