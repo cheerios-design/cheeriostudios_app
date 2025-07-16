@@ -14,10 +14,9 @@ export const COMPANY_INFO = {
 };
 
 export const NAVIGATION_LINKS = [
-  { label: "Home", href: "/" },
+  { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
   { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 

@@ -20,6 +20,27 @@ export default function Navigation() {
     setBackground(latest > 50);
   });
 
+  // Smooth scroll to section
+  const handleNavClick = (href: string) => {
+    if (href.startsWith("#")) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    } else if (href === "/") {
+      // For home, scroll to top of page
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+    // Close mobile menu if open
+    setMobileMenuOpen(false);
+  };
+
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -35,13 +56,7 @@ export default function Navigation() {
   return (
     <>
       <motion.header
-        className={clsx(
-          "fixed top-0 w-full z-50 transition-all duration-500",
-          background ? "backdrop-blur-xl" : ""
-        )}
-        style={{
-          backgroundColor: background ? "rgba(0, 0, 0, 0.4)" : "transparent",
-        }}
+        className={clsx("fixed top-0 w-full z-50 transition-all duration-500")}
       >
         <nav className="container mx-auto">
           <div className="flex items-center justify-between px-6 lg:px-12 py-6">
@@ -73,13 +88,13 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <a
-                      href={link.href}
+                    <button
+                      onClick={() => handleNavClick(link.href)}
                       className="relative text-white/70 hover:text-white text-sm font-medium tracking-wide transition-colors duration-300 group"
                     >
                       {link.label}
                       <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary group-hover:w-full transition-all duration-300" />
-                    </a>
+                    </button>
                   </motion.li>
                 ))}
               </ul>
@@ -122,8 +137,8 @@ export default function Navigation() {
       </motion.header>
 
       {/* Standalone CTA Button - Fixed Position */}
-      <motion.a
-        href="#contact"
+      <motion.button
+        onClick={() => handleNavClick("#contact")}
         className="fixed top-6 right-6 lg:right-12 z-50 inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-white/10 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -148,7 +163,7 @@ export default function Navigation() {
             d="M9 5l7 7-7 7"
           />
         </svg>
-      </motion.a>
+      </motion.button>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -182,13 +197,12 @@ export default function Navigation() {
                       exit={{ opacity: 0, y: 20 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
-                      <a
-                        href={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
+                      <button
+                        onClick={() => handleNavClick(link.href)}
                         className="text-3xl font-medium text-white hover:text-brand-primary transition-colors duration-300"
                       >
                         {link.label}
-                      </a>
+                      </button>
                     </motion.li>
                   ))}
                   <motion.li
@@ -200,9 +214,8 @@ export default function Navigation() {
                       delay: NAVIGATION_LINKS.length * 0.1,
                     }}
                   >
-                    <a
-                      href="#contact"
-                      onClick={() => setMobileMenuOpen(false)}
+                    <button
+                      onClick={() => handleNavClick("#contact")}
                       className="inline-flex items-center px-8 py-3 text-lg font-medium text-white bg-brand-primary rounded-full hover:bg-brand-primary/90 transition-all duration-300 mt-4"
                     >
                       Get Started
@@ -219,7 +232,7 @@ export default function Navigation() {
                           d="M9 5l7 7-7 7"
                         />
                       </svg>
-                    </a>
+                    </button>
                   </motion.li>
                 </ul>
               </nav>
