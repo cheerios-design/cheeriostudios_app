@@ -12,14 +12,11 @@ import Image from "next/image";
 import clsx from "clsx";
 
 export default function Navigation() {
-  const [hidden, setHidden] = useState(false);
   const [background, setBackground] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    setHidden(latest > previous && latest > 150);
     setBackground(latest > 50);
   });
 
@@ -42,82 +39,51 @@ export default function Navigation() {
           "fixed top-0 w-full z-50 transition-all duration-500",
           background ? "backdrop-blur-xl" : ""
         )}
-        animate={{
-          y: hidden ? -100 : 0,
-        }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
         style={{
           backgroundColor: background ? "rgba(0, 0, 0, 0.4)" : "transparent",
         }}
       >
         <nav className="container mx-auto">
           <div className="flex items-center justify-between px-6 lg:px-12 py-6">
-            {/* Logo */}
-            <motion.a
-              href="/"
-              className="relative z-50"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Image
-                src="/sticker-dark.svg"
-                alt="Cheerio Studios Logo"
-                width={48}
-                height={48}
-                className="h-12 w-auto"
-                priority
-              />
-            </motion.a>
-
-            {/* Desktop Navigation */}
-            <ul className="hidden lg:flex items-center space-x-10">
-              {NAVIGATION_LINKS.map((link, index) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <a
-                    href={link.href}
-                    className="relative text-white/70 hover:text-white text-sm font-medium tracking-wide transition-colors duration-300 group"
-                  >
-                    {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary group-hover:w-full transition-all duration-300" />
-                  </a>
-                </motion.li>
-              ))}
-              <motion.li
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: NAVIGATION_LINKS.length * 0.1,
-                }}
+            {/* Logo + Navigation Links Group - Left Side with Background */}
+            <div className="flex items-center space-x-8 lg:space-x-12 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3 border border-white/10">
+              {/* Logo */}
+              <motion.a
+                href="/"
+                className="relative z-50"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <motion.a
-                  href="#contact"
-                  className="relative inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-white/10 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get Started
-                  <svg
-                    className="ml-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <Image
+                  src="/sticker-dark.svg"
+                  alt="Cheerio Studios Logo"
+                  width={40}
+                  height={40}
+                  className="h-10 w-auto"
+                  priority
+                />
+              </motion.a>
+
+              {/* Desktop Navigation Links */}
+              <ul className="hidden lg:flex items-center space-x-8">
+                {NAVIGATION_LINKS.map((link, index) => (
+                  <motion.li
+                    key={link.href}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </motion.a>
-              </motion.li>
-            </ul>
+                    <a
+                      href={link.href}
+                      className="relative text-white/70 hover:text-white text-sm font-medium tracking-wide transition-colors duration-300 group"
+                    >
+                      {link.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary group-hover:w-full transition-all duration-300" />
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -154,6 +120,35 @@ export default function Navigation() {
           </div>
         </nav>
       </motion.header>
+
+      {/* Standalone CTA Button - Fixed Position */}
+      <motion.a
+        href="#contact"
+        className="fixed top-6 right-6 lg:right-12 z-50 inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-white/10 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.5,
+          delay: NAVIGATION_LINKS.length * 0.1,
+        }}
+      >
+        Get Started
+        <svg
+          className="ml-2 w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </motion.a>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
