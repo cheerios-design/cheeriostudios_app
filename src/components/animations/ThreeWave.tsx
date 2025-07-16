@@ -77,14 +77,8 @@ export default function ThreeWave({
   mouseDistortionSmoothness = 100, // Smoothness of mouse distortion
   mouseDistortionDecay = 0.1, // How fast mouse effects fade
   mouseShrinkScaleStrength = 0.8, // Scale factor for mouse distortion
-  mouseShrinkScaleRadius = 500, // Radius of mouse interaction area (increased for testing)
+  mouseShrinkScaleRadius = 500, // Radius of mouse interaction area
 }: ThreeWaveProps) {
-  console.log("ThreeWave: Component rendered with props:", {
-    waveColor,
-    opacity,
-    wireframe,
-  });
-
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -95,7 +89,6 @@ export default function ThreeWave({
 
   useEffect(() => {
     if (!containerRef.current) {
-      console.log("ThreeWave: Container ref not available");
       return;
     }
 
@@ -105,13 +98,9 @@ export default function ThreeWave({
 
     // Check if the container has dimensions
     if (rect.width === 0 || rect.height === 0) {
-      console.warn("ThreeWave: Container has no dimensions, retrying...");
       setTimeout(() => {
         const newRect = container.getBoundingClientRect();
         if (newRect.width > 0 && newRect.height > 0) {
-          console.log(
-            "ThreeWave: Container now has dimensions, reinitializing"
-          );
           // Trigger re-render by updating a state or calling the effect again
         }
       }, 100);
@@ -125,13 +114,11 @@ export default function ThreeWave({
       high: { segments: 200, pixelRatio: window.devicePixelRatio || 1 }, // 40,000 vertices, high-DPI
     };
     const settings = qualitySettings[quality];
-    console.log("ThreeWave: Using quality settings:", settings);
 
     try {
       // Scene setup
       const scene = new THREE.Scene();
       sceneRef.current = scene;
-      console.log("ThreeWave: Scene created");
 
       // Camera setup - controls viewing perspective
       const camera = new THREE.PerspectiveCamera(
@@ -144,7 +131,6 @@ export default function ThreeWave({
       camera.position.y = 0; // Camera height (0 = center)
       camera.lookAt(0, 0, 0); // Point camera at origin
       cameraRef.current = camera;
-      console.log("ThreeWave: Camera created at position:", camera.position);
 
       // Renderer setup
       const renderer = new THREE.WebGLRenderer({
@@ -156,7 +142,6 @@ export default function ThreeWave({
       renderer.setClearColor(0x000000, 0);
       rendererRef.current = renderer;
       container.appendChild(renderer.domElement);
-      console.log("ThreeWave: Renderer created and added to DOM");
 
       // Geometry - creates the wave surface mesh
       const geometry = new THREE.PlaneGeometry(
@@ -175,10 +160,6 @@ export default function ThreeWave({
         wireframe: wireframe, // Show as grid lines vs solid surface
         side: THREE.DoubleSide, // Render both front and back faces
       });
-      console.log(
-        "ThreeWave: Geometry and material created with color:",
-        detectedColor
-      );
 
       // Mesh - combines geometry and material into renderable object
       const plane = new THREE.Mesh(geometry, material);
@@ -187,7 +168,6 @@ export default function ThreeWave({
       plane.position.z = 0; // Keep wave at origin depth
       planeRef.current = plane;
       scene.add(plane); // Add wave to the 3D scene
-      console.log("ThreeWave: Plane mesh created and added to scene");
 
       // Mouse tracking - captures cursor position for interaction
       const handleMouseMove = (event: MouseEvent) => {
@@ -200,26 +180,10 @@ export default function ThreeWave({
 
         mouseRef.current.x = newMouseX;
         mouseRef.current.y = newMouseY;
-
-        // Debug: Log mouse position occasionally
-        if (Math.random() < 0.01) {
-          // Only log 1% of the time to avoid spam
-          console.log("Mouse position:", {
-            screen: { x: event.clientX, y: event.clientY },
-            normalized: { x: newMouseX, y: newMouseY },
-            world: { x: newMouseX * 100, y: newMouseY * 100 },
-          });
-        }
+        // Only log 1% of the time to avoid spam
       };
 
       window.addEventListener("mousemove", handleMouseMove);
-      // Also add mouse enter/leave events to debug
-      container.addEventListener("mouseenter", () => {
-        console.log("Mouse entered ThreeWave container");
-      });
-      container.addEventListener("mouseleave", () => {
-        console.log("Mouse left ThreeWave container");
-      });
 
       // Animation loop - this runs 60 times per second to create wave motion
       let time = 0;
@@ -279,17 +243,6 @@ export default function ThreeWave({
                 // Set final Z position with wave + mouse distortion
                 positionArray[i + 2] =
                   waveHeight + distortion * mouseShrinkScaleStrength;
-
-                // Debug: Log when we're applying mouse distortion (very rarely)
-                if (Math.random() < 0.0001) {
-                  console.log("Mouse distortion applied:", {
-                    mouseWorldX,
-                    mouseWorldY,
-                    mouseDistance,
-                    influence,
-                    distortion,
-                  });
-                }
               } else {
                 // Set final Z position with just wave motion
                 positionArray[i + 2] = waveHeight;
@@ -338,8 +291,6 @@ export default function ThreeWave({
           cancelAnimationFrame(animationIdRef.current);
         }
         window.removeEventListener("mousemove", handleMouseMove);
-        container.removeEventListener("mouseenter", () => {});
-        container.removeEventListener("mouseleave", () => {});
         window.removeEventListener("resize", handleResize);
 
         if (
@@ -353,17 +304,10 @@ export default function ThreeWave({
           rendererRef.current.dispose();
         }
       };
-    } catch (error) {
-      console.error("ThreeWave WebGL Error:", error);
-      console.error("ThreeWave: Full error details:", {
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
-        name: error instanceof Error ? error.name : "Unknown",
-      });
+    } catch {
       // Fallback - hide the component if WebGL fails
       if (containerRef.current) {
         containerRef.current.style.display = "none";
-        console.log("ThreeWave: Component hidden due to WebGL error");
       }
     }
   }, [
