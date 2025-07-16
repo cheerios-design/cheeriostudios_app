@@ -58,22 +58,22 @@ interface ThreeWaveProps {
 
 export default function ThreeWave({
   className = "",
-  speed = 0.015, // Wave animation speed (higher = faster waves)
-  amplitude = 30, // Wave height intensity (higher = taller waves)
+  speed = 0.005, // Wave animation speed (higher = faster waves)
+  amplitude = 50, // Wave height intensity (higher = taller waves)
   smoothness = 300, // Not used in current implementation
   wireframe = true, // Show as wireframe grid or solid surface
   waveColor, // Wave color (defaults to brand gold #fcb432)
-  opacity = 0.3, // Wave transparency (0 = invisible, 1 = opaque)
+  opacity = 0.1, // Wave transparency (0 = invisible, 1 = opaque)
   mouseInteraction = true, // Enable mouse cursor interaction effects
   quality = "medium", // Rendering quality: "low" | "medium" | "high"
-  fov = 60, // Camera field of view (wider = more perspective)
+  fov = 20, // Camera field of view (wider = more perspective)
   waveOffsetY = -300, // Vertical position of wave plane
   waveRotation = 29.8, // Tilt angle of wave plane (degrees)
-  cameraDistance = -500, // How far back the camera sits (negative = further)
+  cameraDistance = -1000, // How far back the camera sits (negative = further)
   autoDetectBackground = true, // Auto-detect background color (not implemented)
   backgroundColor, // Background color override
   ease = 12, // Easing factor (not used in current implementation)
-  mouseDistortionStrength = 0.5, // How strong mouse effects are
+  mouseDistortionStrength = 1, // How strong mouse effects are
   mouseDistortionSmoothness = 100, // Smoothness of mouse distortion
   mouseDistortionDecay = 0.0005, // How fast mouse effects fade
   mouseShrinkScaleStrength = 0.7, // Scale factor for mouse distortion
@@ -225,15 +225,15 @@ export default function ThreeWave({
 
             // Layer 2: Horizontal wave moving left-right
             const horizontalWave =
-              Math.sin(x * 0.01 + time * 1.5) * amplitude * 0.5;
+              Math.sin(x * 0.01 + time * 1.5) * amplitude * 0.8;
 
             // Layer 3: Vertical wave moving up-down
             const verticalWave =
-              Math.cos(y * 0.01 + time * 0.8) * amplitude * 0.3;
+              Math.cos(y * 0.01 + time * 0.8) * amplitude * 0.6;
 
             // Layer 4: Diagonal interference pattern
             const diagonalWave =
-              Math.sin(x * 0.005 + y * 0.005 + time * 2) * amplitude * 0.2;
+              Math.sin(x * 0.005 + y * 0.005 + time * 2) * amplitude * 0.4;
 
             // Combine all wave layers for final height
             const waveHeight =
