@@ -58,26 +58,26 @@ interface ThreeWaveProps {
 
 export default function ThreeWave({
   className = "",
-  speed = 0.005, // Wave animation speed (higher = faster waves)
+  speed = 0.002, // Wave animation speed (higher = faster waves)
   amplitude = 50, // Wave height intensity (higher = taller waves)
   smoothness = 300, // Not used in current implementation
   wireframe = true, // Show as wireframe grid or solid surface
   waveColor, // Wave color (defaults to brand gold #fcb432)
-  opacity = 0.1, // Wave transparency (0 = invisible, 1 = opaque)
+  opacity = 0.05, // Wave transparency (0 = invisible, 1 = opaque)
   mouseInteraction = true, // Enable mouse cursor interaction effects
   quality = "medium", // Rendering quality: "low" | "medium" | "high"
-  fov = 20, // Camera field of view (wider = more perspective)
+  fov = 25, // Camera field of view (wider = more perspective)
   waveOffsetY = -300, // Vertical position of wave plane
   waveRotation = 29.8, // Tilt angle of wave plane (degrees)
-  cameraDistance = -1000, // How far back the camera sits (negative = further)
+  cameraDistance = -700, // How far back the camera sits (negative = further)
   autoDetectBackground = true, // Auto-detect background color (not implemented)
   backgroundColor, // Background color override
   ease = 12, // Easing factor (not used in current implementation)
-  mouseDistortionStrength = 1, // How strong mouse effects are
+  mouseDistortionStrength = 100, // How strong mouse effects are (increased for testing)
   mouseDistortionSmoothness = 100, // Smoothness of mouse distortion
-  mouseDistortionDecay = 0.0005, // How fast mouse effects fade
-  mouseShrinkScaleStrength = 0.7, // Scale factor for mouse distortion
-  mouseShrinkScaleRadius = 200, // Radius of mouse interaction area
+  mouseDistortionDecay = 0.1, // How fast mouse effects fade
+  mouseShrinkScaleStrength = 0.8, // Scale factor for mouse distortion
+  mouseShrinkScaleRadius = 500, // Radius of mouse interaction area (increased for testing)
 }: ThreeWaveProps) {
   console.log("ThreeWave: Component rendered with props:", {
     waveColor,
@@ -195,12 +195,31 @@ export default function ThreeWave({
 
         const rect = container.getBoundingClientRect();
         // Convert screen coordinates to normalized device coordinates (-1 to 1)
-        mouseRef.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        mouseRef.current.y =
-          -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        const newMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        const newMouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        mouseRef.current.x = newMouseX;
+        mouseRef.current.y = newMouseY;
+
+        // Debug: Log mouse position occasionally
+        if (Math.random() < 0.01) {
+          // Only log 1% of the time to avoid spam
+          console.log("Mouse position:", {
+            screen: { x: event.clientX, y: event.clientY },
+            normalized: { x: newMouseX, y: newMouseY },
+            world: { x: newMouseX * 100, y: newMouseY * 100 },
+          });
+        }
       };
 
       window.addEventListener("mousemove", handleMouseMove);
+      // Also add mouse enter/leave events to debug
+      container.addEventListener("mouseenter", () => {
+        console.log("Mouse entered ThreeWave container");
+      });
+      container.addEventListener("mouseleave", () => {
+        console.log("Mouse left ThreeWave container");
+      });
 
       // Animation loop - this runs 60 times per second to create wave motion
       let time = 0;
@@ -242,8 +261,8 @@ export default function ThreeWave({
             // === MOUSE INTERACTION - Distort waves around cursor ===
             if (mouseInteraction) {
               // Convert mouse coordinates to world space
-              const mouseWorldX = mouseRef.current.x * 500;
-              const mouseWorldY = mouseRef.current.y * 500;
+              const mouseWorldX = mouseRef.current.x * 100;
+              const mouseWorldY = mouseRef.current.y * 100;
 
               // Calculate distance from vertex to mouse cursor
               const mouseDistance = Math.sqrt(
@@ -260,6 +279,17 @@ export default function ThreeWave({
                 // Set final Z position with wave + mouse distortion
                 positionArray[i + 2] =
                   waveHeight + distortion * mouseShrinkScaleStrength;
+
+                // Debug: Log when we're applying mouse distortion (very rarely)
+                if (Math.random() < 0.0001) {
+                  console.log("Mouse distortion applied:", {
+                    mouseWorldX,
+                    mouseWorldY,
+                    mouseDistance,
+                    influence,
+                    distortion,
+                  });
+                }
               } else {
                 // Set final Z position with just wave motion
                 positionArray[i + 2] = waveHeight;
@@ -308,6 +338,8 @@ export default function ThreeWave({
           cancelAnimationFrame(animationIdRef.current);
         }
         window.removeEventListener("mousemove", handleMouseMove);
+        container.removeEventListener("mouseenter", () => {});
+        container.removeEventListener("mouseleave", () => {});
         window.removeEventListener("resize", handleResize);
 
         if (
@@ -360,11 +392,12 @@ export default function ThreeWave({
   return (
     <div
       ref={containerRef}
-      className={`absolute inset-0 w-full h-full pointer-events-none ${className}`}
+      className={`absolute inset-0 w-full h-full ${className}`}
       style={{
         background: "transparent",
         overflow: "hidden",
         zIndex: 1,
+        pointerEvents: "auto", // Enable mouse events for interaction
       }}
     />
   );
