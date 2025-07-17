@@ -22,6 +22,8 @@ export default function Navigation() {
 
   // Smooth scroll to section
   const handleNavClick = (href: string) => {
+    if (typeof window === "undefined") return;
+
     if (href.startsWith("#")) {
       const element = document.querySelector(href);
       if (element) {
@@ -43,20 +45,30 @@ export default function Navigation() {
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = "unset";
+      if (typeof window !== "undefined") {
+        document.body.style.overflow = "unset";
+      }
     };
   }, [mobileMenuOpen]);
 
   return (
     <>
       <motion.header
-        className={clsx("fixed top-0 w-full z-50 transition-all duration-500")}
+        className={clsx(
+          "fixed top-0 w-full z-50 transition-all duration-500",
+          background ? "backdrop-blur-xl" : ""
+        )}
+        style={{
+          backgroundColor: background ? "rgba(0, 0, 0, 0.4)" : "transparent",
+        }}
       >
         <nav className="container mx-auto">
           <div className="flex items-center justify-between px-6 lg:px-12 py-6">

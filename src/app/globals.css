@@ -157,3 +157,77 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-secondary);
 }
+
+/* Animated gradient for text */
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-gradient-text {
+  background: linear-gradient(-45deg, #9333ea, #3b82f6, #06b6d4, #8b5cf6, #ec4899, #f59e0b);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* Aurora gradient animation for text */
+@keyframes aurora-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.aurora-gradient-text {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(45deg, #B567F5 25%, #e2c638 100%);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: aurora-shift 10s ease-in-out infinite;
+  will-change: background-position;
+  padding: 0.1em 0;
+  line-height: 1.2;
+}
+
+/* Ensure gradient text is visible on webkit browsers */
+.aurora-gradient-text * {
+  background: inherit;
+  background-size: inherit;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Fallback for browsers that don't support background-clip: text */
+@supports not (-webkit-background-clip: text) {
+  .aurora-gradient-text {
+    color: #FF6B6B;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-gradient-text {
+    animation: none;
+  }
+}

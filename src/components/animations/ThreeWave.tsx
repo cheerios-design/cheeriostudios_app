@@ -94,7 +94,6 @@ export default function ThreeWave({
 
     const container = containerRef.current;
     const rect = container.getBoundingClientRect();
-    console.log("ThreeWave: Initializing with rect:", rect);
 
     // Check if the container has dimensions
     if (rect.width === 0 || rect.height === 0) {
@@ -270,7 +269,6 @@ export default function ThreeWave({
 
       // Start animation
       animate();
-      console.log("ThreeWave: Animation started successfully");
 
       // Resize handler
       const handleResize = () => {

@@ -58,7 +58,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-body bg-dark-bg text-white overflow-x-hidden">
+      <body
+        className="font-body bg-dark-bg text-white overflow-x-hidden"
+        suppressHydrationWarning={true}
+      >
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

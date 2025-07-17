@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { fadeInUp } from "@/utils/animations";
 import ScrollAnimation from "@/components/animations/ScrollAnimation";
 import ThreeWave from "@/components/animations/ThreeWave";
+import BlurText from "@/components/animations/BlurText";
+import AuroraGradientText from "@/components/animations/AuroraGradientText";
+import ClientOnly from "@/components/layout/ClientOnly";
 
 export default function Hero() {
   return (
@@ -12,21 +15,32 @@ export default function Hero() {
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
       {/* Animated Wave Background */}
-      <ThreeWave />
-
-      {/* Original gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/10 to-transparent" />
+      <ClientOnly>
+        <ThreeWave />
+      </ClientOnly>
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
-          className="text-center"
+          className="text-center flex flex-col items-center justify-center"
         >
-          <h1 className="text-hero font-display mb-6">
-            Where Digital
-            <span className="block text-brand-primary">Dreams Take Flight</span>
+          <h1 className="text-hero font-display mb-6 text-center flex flex-col items-center">
+            <BlurText
+              text="Where Digital"
+              animateBy="words"
+              direction="top"
+              delay={0.3}
+            />
+            <AuroraGradientText className="pt-4 block">
+              <BlurText
+                text="Dreams Take Flight"
+                animateBy="words"
+                direction="top"
+                delay={0.5}
+              />
+            </AuroraGradientText>
           </h1>
 
           <ScrollAnimation>
