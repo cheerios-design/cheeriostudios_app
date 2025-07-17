@@ -71,9 +71,9 @@ export default function Navigation() {
         }}
       >
         <nav className="container mx-auto">
-          <div className="flex items-center justify-between px-6 lg:px-12 py-6">
+          <div className="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-6">
             {/* Logo + Navigation Links Group - Left Side with Background */}
-            <div className="flex items-center space-x-8 lg:space-x-12 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3 border border-white/10">
+            <div className="flex items-center space-x-4 lg:space-x-12 bg-black/20 backdrop-blur-sm rounded-full px-4 lg:px-6 py-2 lg:py-3 border border-white/10">
               {/* Logo */}
               <motion.a
                 href="/"
@@ -86,7 +86,7 @@ export default function Navigation() {
                   alt="Cheerio Studios Logo"
                   width={40}
                   height={40}
-                  className="h-10 w-auto"
+                  className="h-8 lg:h-10 w-auto"
                   priority
                 />
               </motion.a>
@@ -148,10 +148,10 @@ export default function Navigation() {
         </nav>
       </motion.header>
 
-      {/* Standalone CTA Button - Fixed Position */}
+      {/* Standalone CTA Button - Fixed Position - Hidden on Mobile */}
       <motion.button
         onClick={() => handleNavClick("#contact")}
-        className="fixed top-6 right-6 lg:right-12 z-50 inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-white/10 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+        className="hidden lg:flex fixed top-6 right-6 lg:right-12 z-50 items-center px-6 py-2.5 text-sm font-medium text-white bg-white/10 rounded-full backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: -20 }}

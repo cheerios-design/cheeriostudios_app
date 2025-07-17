@@ -198,12 +198,12 @@ html {
 .aurora-gradient-text {
   position: relative;
   display: inline-block;
-  background: linear-gradient(45deg, #B567F5 25%, #e2c638 100%);
+  background: linear-gradient(45deg, #e0cc90 25%, #ec4899 50%, #f59e0b 100%);
   background-size: 400% 400%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: aurora-shift 10s ease-in-out infinite;
+  animation: aurora-shift 6s ease-in-out infinite;
   will-change: background-position;
   padding: 0.1em 0;
   line-height: 1.2;

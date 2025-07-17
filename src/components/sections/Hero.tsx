@@ -33,7 +33,7 @@ export default function Hero() {
               direction="top"
               delay={0.3}
             />
-            <AuroraGradientText className="pt-4 block">
+            <AuroraGradientText className="pt-4">
               <BlurText
                 text="Dreams Take Flight"
                 animateBy="words"
