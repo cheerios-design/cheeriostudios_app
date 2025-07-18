@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen my-5 flex items-center justify-center relative overflow-hidden"
     >
       {/* Animated Wave Background */}
       <ClientOnly>

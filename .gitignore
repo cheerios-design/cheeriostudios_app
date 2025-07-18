@@ -189,3 +189,73 @@ dist
 
 # SWC
 .swc/
+
+# Tailwind CSS
+.tailwindcss-cache
+
+# Three.js builds
+*.glb
+*.gltf
+
+# Temporary files
+*.tmp
+*.temp
+
+# macOS system files
+.AppleDouble
+.LSOverride
+
+# Windows system files
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux system files
+*~
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Archive files (unless intentionally versioned)
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Local development certificates
+*.pem
+*.key
+*.crt
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
