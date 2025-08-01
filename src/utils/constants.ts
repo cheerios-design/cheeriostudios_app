@@ -16,7 +16,7 @@ export const COMPANY_INFO = {
 export const NAVIGATION_LINKS = [
   { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
+  { label: "Projects", href: "#featured-projects" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -63,6 +63,55 @@ export const SERVICES = [
       "UX audits",
       "Growth strategies",
     ],
+  },
+];
+
+export const FEATURED_PROJECTS = [
+  {
+    id: "archovia",
+    name: "Archovia Platform",
+    category: "INTUITIVE",
+    title: "Architecture Collaboration",
+    description: [
+      "Revolutionary platform that transforms how architects collaborate and manage projects in the digital age.",
+      "Built with cutting-edge technology to provide seamless workflow integration and real-time project visualization.",
+    ],
+    technologies: [
+      "React & Next.js",
+      "TypeScript",
+      "Three.js",
+      "WebGL",
+      "Node.js",
+      "PostgreSQL",
+    ],
+    caseStudyUrl: "/case-studies/archovia",
+    thumbnail: "/projects/archovia/proj.thmbnl-archovia.webp",
+  },
+  {
+    id: "envanter",
+    name: "Envanter System",
+    category: "SCALABLE",
+    title: "Enterprise Inventory",
+    description: [
+      "Comprehensive inventory management system designed for enterprise-level operations and scalability.",
+      "Advanced analytics and real-time tracking capabilities that streamline business operations and reduce costs.",
+    ],
+    technologies: ["Vue.js", "Python", "Django", "Redis", "Docker", "MySQL"],
+    caseStudyUrl: "/case-studies/envanter",
+    thumbnail: "/projects/envanter/proj.thmbnl-envanter.webp",
+  },
+  {
+    id: "brandflow",
+    name: "BrandFlow Studio",
+    category: "SEAMLESS",
+    title: "Brand Management",
+    description: [
+      "Digital brand management platform that unifies creative workflows and brand consistency across teams.",
+      "Intuitive design system management with collaborative features for distributed creative teams.",
+    ],
+    technologies: ["React", "GraphQL", "Apollo", "Figma API", "AWS", "MongoDB"],
+    caseStudyUrl: "/case-studies/brandflow",
+    thumbnail: "/projects/archovia/proj.thmbnl-archovia.png",
   },
 ];
 

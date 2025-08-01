@@ -16,16 +16,16 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-20">
+    <section id="services" className="py-0 md:py-10 lg:py-20">
       <div className="container mx-auto px-6">
         <div className="mb-16 user-select-none">
           <CurvedLoop
             marqueeText="✦ EVERYTHING ✦ YOU ✦ NEED ✦ AND ✦ MORE ✦"
-            speed={1}
-            curveAmount={100}
+            speed={1.2}
+            curveAmount={120}
             direction="right"
             interactive={false}
-            className="text-white text-8xl md:text-5xl lg:text-6xl font-bold curved-loop-custom"
+            className="text-white text-[5rem] sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-black curved-loop-custom"
           />
         </div>
 
